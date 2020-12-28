@@ -30,7 +30,13 @@ class App extends Component {
 
   getVehicles() {
     // axios (GET)
+
+    axios.get('https://joes-autos.herokuapp.com/api/vehicles')
+    .then(res => this.setState({vehiclesToDisplay: res.data}))
+    .catch(err => toast.error('cannot find cars'))
     // setState with response -> vehiclesToDisplay
+
+
   }
 
   getPotentialBuyers() {
@@ -41,6 +47,10 @@ class App extends Component {
   sellCar(id) {
     // axios (DELETE)
     // setState with response -> vehiclesToDisplay
+
+    axios.delete('https://joes-autos.herokuapp.com/api/vehicles/' + id)
+    .then(response => this.setState({vehiclesToDisplay: response.data.vehicles}))
+    .catch( _ => toast.success('Car was not sold'))
   }
 
   filterByMake() {
@@ -60,6 +70,10 @@ class App extends Component {
   updatePrice(priceChange, id) {
     // axios (PUT)
     // setState with response -> vehiclesToDisplay
+
+    axios.put(`https://joes-autos.herokuapp.com/api/vehicles/${id}/${priceChange}`)
+    .then(res => this.setState({vehiclesToDisplay: res.data.vehicles}))
+    .catch( _ => toast.error('Could not update price!'))
   }
 
   addCar() {
@@ -73,6 +87,11 @@ class App extends Component {
 
     // axios (POST)
     // setState with response -> vehiclesToDisplay
+
+    //axios.post(endpoint, body)
+    axios.post('https://joes-autos.herokuapp.com/api/vehicles', newCar)
+    .then(res => this.setState({vehiclesToDisplay: res.data.vehicles}))
+    .catch(_=> toast.error('Could not add vehicle'))
   }
 
   addBuyer() {
